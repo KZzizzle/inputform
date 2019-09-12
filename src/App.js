@@ -2,8 +2,9 @@ import React from 'react';
 import logo from './osparclogo.JPG';
 
 import './App.css';
-import { MDBContainer,MDBBtn,MDBIcon,MDBBadge, MDBInputGroup, MDBRow, MDBCol } from "mdbreact";
-import { stringify } from 'querystring';
+import { MDBContainer,MDBCard, MDBBtn, MDBIcon,MDBBadge, MDBInputGroup, MDBRow, MDBCol } from "mdbreact";
+import Dropzone from 'react-dropzone'
+
 
 class App extends React.Component {
 
@@ -11,6 +12,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
+      codefile: null,
+
       inputs: [
         {
           number: 1,
@@ -37,6 +41,7 @@ class App extends React.Component {
     this.setState({ outputs });
   };
   
+
   addinput = () => {
     var newArray = [...this.state.inputs];
     const thisnumber=newArray.length ? newArray[newArray.length - 1].number + 1 : 1
@@ -72,13 +77,25 @@ class App extends React.Component {
     });
   };
   
+  onDrop = (acceptedFiles) => {
+    console.log(acceptedFiles);
+    console.log(acceptedFiles[0].name);
+    this.setState({
+      codefile: acceptedFiles[0].name
+    });
+  }
+  
   render() {
     return (
- 
+      
       <MDBContainer>
-        <img src={logo} alt="logo" className="App-header" />
-        <h1  className="text-uppercase my-5 grey-text">
-          Create a new service in O2S2PARC </h1>
+        <MDBRow> <h1 className="my-3" >{" "}</h1></MDBRow>
+
+        <img src={logo} alt="logo" />
+        <h1  className="text-uppercase my-4 grey-text">
+          Create a new service </h1>
+
+        {/* USER INFORMATION */}
         <MDBRow>
           <MDBCol>
             <MDBInputGroup containerClassName="mb-3" hint="First Name" />
@@ -87,7 +104,9 @@ class App extends React.Component {
             <MDBInputGroup containerClassName="mb-3" hint= "Last Name" />
           </MDBCol>
         </MDBRow>
+
         <MDBInputGroup containerClassName="mb-3"  hint="e-mail address" />
+
         <h6> Description of the service </h6>
         <div className="mb-3 input-group">
             <div className="input-group-prepend">
@@ -97,17 +116,25 @@ class App extends React.Component {
             </div>
             <textarea className="form-control" id="description"  rows="3"></textarea>
         </div>
-          
-        <MDBInputGroup
-          label="Your Github repository"
-          containerClassName="mb-3"
-          prepend="https://github.com/"
-          id="basic-url"
-        />
+      
+        <h6> Code Upload </h6>
+        <div className="text-center mb-3 grey-text">
+          <MDBCard>
+            <Dropzone onDrop={this.onDrop}>
+              {({getRootProps, getInputProps}) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
 
-        <MDBRow> <h5 className=" my-2" ></h5></MDBRow>
+                  <p></p><p> {this.state.codefile ? this.state.codefile : "Your Python Code File"} </p>
+                </div>
+              )}
+            </Dropzone>
+          </MDBCard>
+        </div>
+       
+        <MDBRow> <h5 className=" my-2" >{" "}</h5></MDBRow>
 
-        {/* INPUTS */}
+        {/* SERVICE INPUTS */}
         <div>
           <h5 className="text-uppercase  my-2 orange-text" >Define Inputs and Outputs</h5>
           <hr className="hr-bold my-1" />
@@ -120,7 +147,6 @@ class App extends React.Component {
                 type={input.type}
                 IO={input.IO}
                 onDelete={this.handleDelete}
-                // onDelete={this.handleDelete}
               />
             ))}
           </div>
@@ -143,7 +169,6 @@ class App extends React.Component {
                 type={output.type}
                 IO={output.IO}
                 onDelete={this.handleDelete}
-                // onDelete={this.handleDelete}
               />
             ))}
           </div>
@@ -174,8 +199,27 @@ class IO extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedFiles: [{
+        fileID: null,
+        file:null
+      }],
+      loaded: 0
     };
   }
+
+  onChangeHandler=event=>{
+    var FileArray = [...this.state.selectedFiles];
+    FileArray.push({
+      fileID:  "file",
+      file: event.target.files[0]
+    });
+    this.setState({
+      selectedFiles: FileArray,
+      loaded: 0,
+    })
+
+  }
+
   render() {
     return (
       <MDBContainer>
@@ -206,10 +250,12 @@ class IO extends React.Component {
               <div className="custom-file">
                 <input
                   type="file"
+                  name="file"
                   className="custom-file-input"
-                  id="inputGroupFile01"
-                  aria-describedby="inputGroupFileAddon01"
+                  onChange={this.onChangeHandler}
                 />
+
+
                 <label className="custom-file-label grey-text" htmlFor="inputGroupFile01">
                   Choose validation data file
                 </label>
@@ -217,7 +263,7 @@ class IO extends React.Component {
             </div>
           </MDBCol>
         </MDBRow>
-        <MDBRow> <h5 className=" my-2" ></h5></MDBRow>
+        <MDBRow> <h5 className=" my-2" >{" "}</h5></MDBRow>
       </MDBContainer>
     );
   }
