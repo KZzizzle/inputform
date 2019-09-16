@@ -15,20 +15,31 @@ class App extends React.Component {
 
       codefile: null,
 
+      valfilecount: 0,
+
+      valFilelist: [{
+        fileID: null,
+        file: null,
+        filename: "Upload Validation File"
+      }],
+
+
       inputs: [
         {
           number: 1,
-          name: "input_1",
+          key: "input_1",
           type: "integer",
-          IO: "input"
+          IO: "input",
+          onDelete: this.handleDelete,
         },
       ],
       outputs: [
         {
           number: 1,
-          name: "output_1",
+          key: "output_1",
           type: "csv-file",
-          IO: "output"
+          IO: "output",
+          onDelete: this.handleDelete,
         },
       ]
     };
@@ -85,6 +96,27 @@ class App extends React.Component {
     });
   }
   
+  onValDataDrop = (acceptedFiles, thisIOname) => {
+    var newArray = [...this.state.valFilelist];
+    const thisname=thisIOname+"_validationfile"; 
+    if (acceptedFiles!==undefined){
+      const thisfile= acceptedFiles[0]
+      const thisfilename=acceptedFiles[0].name
+
+      newArray.push({
+        fileID: thisname,
+        file: thisfile,
+        filename: thisfilename
+      });
+
+      this.setState({ valFilelist: newArray });
+      this.setState(({ valfilecount }) => ({ valfilecount: valfilecount + 1 }));
+    }
+    console.log( this.state.valFilelist)
+  }
+
+
+
   render() {
     return (
       
@@ -98,14 +130,14 @@ class App extends React.Component {
         {/* USER INFORMATION */}
         <MDBRow>
           <MDBCol>
-            <MDBInputGroup containerClassName="mb-3" hint="First Name" />
+            <MDBInputGroup className="mb-3" hint="First Name" />
           </MDBCol>
           <MDBCol>
-            <MDBInputGroup containerClassName="mb-3" hint= "Last Name" />
+            <MDBInputGroup className="mb-3" hint= "Last Name" />
           </MDBCol>
         </MDBRow>
 
-        <MDBInputGroup containerClassName="mb-3"  hint="e-mail address" />
+        <MDBInputGroup className="mb-3"  hint="e-mail address" />
 
         <h6> Description of the service </h6>
         <div className="mb-3 input-group">
@@ -132,6 +164,9 @@ class App extends React.Component {
           </MDBCard>
         </div>
        
+        <h6> Command Line to Run Code </h6>
+          <MDBInputGroup className="mb-3" hint="Ex. myfunction(input1)" />
+
         <MDBRow> <h5 className=" my-2" >{" "}</h5></MDBRow>
 
         {/* SERVICE INPUTS */}
@@ -147,6 +182,7 @@ class App extends React.Component {
                 type={input.type}
                 IO={input.IO}
                 onDelete={this.handleDelete}
+                onValDataDrop={this.onValDataDrop}
               />
             ))}
           </div>
@@ -169,6 +205,7 @@ class App extends React.Component {
                 type={output.type}
                 IO={output.IO}
                 onDelete={this.handleDelete}
+                onValDataDrop={this.onValDataDrop}
               />
             ))}
           </div>
@@ -179,6 +216,7 @@ class App extends React.Component {
             onClick={() => (this.addoutput())}/>
           </MDBRow>
         </div>
+        
 
         {/* SUBMIT */}
         <MDBRow className="mb-5">
@@ -189,7 +227,6 @@ class App extends React.Component {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-
     );
   }
 }
@@ -199,28 +236,24 @@ class IO extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFiles: [{
-        fileID: null,
-        file:null
-      }],
-      loaded: 0
+      filename: "Upload Validation File"
     };
   }
 
-  onChangeHandler=event=>{
-    var FileArray = [...this.state.selectedFiles];
-    FileArray.push({
-      fileID:  "file",
-      file: event.target.files[0]
-    });
-    this.setState({
-      selectedFiles: FileArray,
-      loaded: 0,
-    })
-
+  updateName=acceptedFiles => {
+    if(acceptedFiles !== undefined){
+      const thisfilename= acceptedFiles[0].name;
+      this.setState({filename: thisfilename});
+    }
   }
 
+  handlechange = (acceptedFiles) => {
+    this.props.onValDataDrop(acceptedFiles, this.props.name);
+    this.updateName(acceptedFiles);
+  }
+  
   render() {
+    
     return (
       <MDBContainer>
         <MDBBadge color="danger" className="ml-2 float-right"
@@ -228,41 +261,34 @@ class IO extends React.Component {
           - 
         </MDBBadge>
         <MDBRow>
-          <MDBCol containerClassName="mb-1" md="2" middle> {this.props.IO} {this.props.number} :
+          <MDBCol className="md-2" md="2" middle> {this.props.IO} {this.props.number} :
           </MDBCol>
           <MDBCol>
-            <MDBInputGroup containerClassName="mb-1" prepend="name" hint="varname" />
+            <MDBInputGroup className="md-2" prepend="name" hint="varname" />
           </MDBCol>
           <MDBCol>
-            <MDBInputGroup containerClassName="mb-1" prepend="type" hint= "integer" />
+            <MDBInputGroup className="md-2" prepend="type" hint= "integer" />
           </MDBCol>
         </MDBRow>
-
+        <p></p>
         <MDBRow>
-          <MDBCol containerClassName="mb-2" md="2"> {} </MDBCol>
-          <MDBCol containerClassName="mb-2" md="9">
-            <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text orange lighten-4 orange-text"  id="inputGroupFileAddon01">
-                  upload
-                </span>
-              </div>
-              <div className="custom-file">
-                <input
-                  type="file"
-                  name="file"
-                  className="custom-file-input"
-                  onChange={this.onChangeHandler}
-                />
-
-
-                <label className="custom-file-label grey-text" htmlFor="inputGroupFile01">
-                  Choose validation data file
-                </label>
-              </div>
+          <MDBCol className="mb-1" md="2"> {} </MDBCol>
+          <MDBCol className="mb-1" md="9">
+          <MDBCard>
+            <div style={{backgroundColor: '#eceff1'}} className="text-center orange-text">
+            <Dropzone onDrop={this.handlechange}>
+              {({getRootProps, getInputProps}) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {this.state.filename} 
+                </div>
+              )}
+            </Dropzone>
             </div>
+            </MDBCard>
           </MDBCol>
         </MDBRow>
+
         <MDBRow> <h5 className=" my-2" >{" "}</h5></MDBRow>
       </MDBContainer>
     );
