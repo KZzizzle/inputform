@@ -2,7 +2,10 @@ import React from 'react';
 import logo from './osparclogo.JPG';
 
 import './App.css';
-import { MDBContainer,MDBCard, MDBBtn, MDBIcon,MDBBadge, MDBInputGroup, MDBRow, MDBCol } from "mdbreact";
+import { MDBContainer,MDBProgress, MDBModal,
+  MDBModalBody, MDBModalHeader, MDBModalFooter, 
+  MDBCard, MDBBtn, MDBIcon,MDBBadge, 
+  MDBInputGroup, MDBRow, MDBCol } from "mdbreact";
 import Dropzone from 'react-dropzone'
 
 
@@ -12,9 +15,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstname: "",
+      lastname: "",
+      email: "",
 
+      modal: false,
       codefile: null,
-
       valfilecount: 0,
 
       valFilelist: [{
@@ -27,7 +33,7 @@ class App extends React.Component {
       inputs: [
         {
           number: 1,
-          key: "input_1",
+          name: "input_1",
           type: "integer",
           IO: "input",
           onDelete: this.handleDelete,
@@ -36,7 +42,7 @@ class App extends React.Component {
       outputs: [
         {
           number: 1,
-          key: "output_1",
+          name: "output_1",
           type: "csv-file",
           IO: "output",
           onDelete: this.handleDelete,
@@ -44,6 +50,12 @@ class App extends React.Component {
       ]
     };
   }
+
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
 
   handleDelete = ioname => {
     const inputs = this.state.inputs.filter(e=>e.name !== ioname);
@@ -88,6 +100,13 @@ class App extends React.Component {
     });
   };
   
+  handleTextChange = inputName => value => {
+    const nextValue = value;
+    this.setState({
+      [inputName]: nextValue
+    });
+  };
+
   onDrop = (acceptedFiles) => {
     console.log(acceptedFiles);
     console.log(acceptedFiles[0].name);
@@ -96,9 +115,15 @@ class App extends React.Component {
     });
   }
   
-  onValDataDrop = (acceptedFiles, thisIOname) => {
+  onValDataDrop = (acceptedFiles, thisIOfilename) => {
+    // if the input/output already exists, remove the associated file and replace it with the new file.
+    const targetfilename = thisIOfilename+"_validationfile";
+    const untargetedfiles = this.state.valFilelist.filter(e=>e.fileID !== targetfilename);
+    this.setState({ valFilelist: untargetedfiles });
+    console.log(targetfilename)
+
     var newArray = [...this.state.valFilelist];
-    const thisname=thisIOname+"_validationfile"; 
+    const thisname=thisIOfilename+"_validationfile"; 
     if (acceptedFiles!==undefined){
       const thisfile= acceptedFiles[0]
       const thisfilename=acceptedFiles[0].name
@@ -115,10 +140,32 @@ class App extends React.Component {
     console.log( this.state.valFilelist)
   }
 
-
-
   render() {
     return (
+      <React.Fragment>
+
+      <MDBModal centered isOpen={this.state.modal} toggle={this.toggleModal}>
+        <MDBModalHeader
+          className="text-center"
+          titleClass="w-100 font-weight-bold"
+          toggle={this.toggleModal}
+        >
+          Automated Checking and Submission 
+        </MDBModalHeader>
+        <MDBModalBody>
+          <p>Thank you {this.state.firstname + " "}for your submission. We are performing automatic 
+          validation and will contact you when your service is integrated into O2S2PARC or 
+          if we have any questions. </p>
+          <MDBCol xl="3" md="6" className="mx-auto text-center">
+            <MDBBtn color="info" rounded onClick={this.toggleModal} >
+              OK
+            </MDBBtn>
+          </MDBCol>
+        </MDBModalBody>
+        <MDBModalFooter className="justify-content-center">
+        </MDBModalFooter>
+      </MDBModal>
+      
       
       <MDBContainer>
         <MDBRow> <h1 className="my-3" >{" "}</h1></MDBRow>
@@ -130,14 +177,13 @@ class App extends React.Component {
         {/* USER INFORMATION */}
         <MDBRow>
           <MDBCol>
-            <MDBInputGroup className="mb-3" hint="First Name" />
+            <MDBInputGroup className="mb-3" hint="First Name" getValue={this.handleTextChange("firstname")}/>
           </MDBCol>
           <MDBCol>
-            <MDBInputGroup className="mb-3" hint= "Last Name" />
+            <MDBInputGroup className="mb-3" hint= "Last Name" getValue={this.handleTextChange("lastname")}/>
           </MDBCol>
         </MDBRow>
-
-        <MDBInputGroup className="mb-3"  hint="e-mail address" />
+        <MDBInputGroup className="mb-3"  hint="e-mail address" getValue={this.handleTextChange("email")} />
 
         <h6> Description of the service </h6>
         <div className="mb-3 input-group">
@@ -221,15 +267,18 @@ class App extends React.Component {
         {/* SUBMIT */}
         <MDBRow className="mb-5">
           <MDBCol xl="3" md="6" className="mx-auto text-center">
-            <MDBBtn color="info" rounded >
+            <MDBBtn color="info" rounded onClick={this.toggleModal} >
               Submit
             </MDBBtn>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+      </React.Fragment>
     );
   }
 }
+
+//========================== Input/Output components ===================================
 
 class IO extends React.Component {
     
