@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './osparclogo.JPG';
 
 import './App.css';
-import { MDBContainer,MDBProgress, MDBModal,
+import { MDBContainer, MDBModal,
   MDBModalBody, MDBModalHeader, MDBModalFooter, 
   MDBCard, MDBBtn, MDBIcon,MDBBadge, 
   MDBInputGroup, MDBRow, MDBCol } from "mdbreact";
@@ -18,6 +18,7 @@ class App extends React.Component {
       firstname: "",
       lastname: "",
       email: "",
+      affiliation: "",
 
       modal: false,
       codefile: null,
@@ -171,20 +172,25 @@ class App extends React.Component {
         <MDBRow> <h1 className="my-3" >{" "}</h1></MDBRow>
 
         <img src={logo} alt="logo" />
-        <h1  className="text-uppercase my-4 grey-text">
+        <h1  className="text-uppercase my-4 grey-text" centered>
           Create a new service </h1>
 
         {/* USER INFORMATION */}
+        <h5 className="text-uppercase  my-3 orange-text" >Contributor Information</h5>
+        <hr className="hr-bold my-3" />
         <MDBRow>
           <MDBCol>
-            <MDBInputGroup className="mb-3" hint="First Name" getValue={this.handleTextChange("firstname")}/>
+            <MDBInputGroup className="mb-2" hint="First Name" getValue={this.handleTextChange("firstname")}/>
           </MDBCol>
           <MDBCol>
-            <MDBInputGroup className="mb-3" hint= "Last Name" getValue={this.handleTextChange("lastname")}/>
+            <MDBInputGroup className="mb-2" hint= "Last Name" getValue={this.handleTextChange("lastname")}/>
           </MDBCol>
         </MDBRow>
-        <MDBInputGroup className="mb-3"  hint="e-mail address" getValue={this.handleTextChange("email")} />
+        <MDBInputGroup className="mb-2"  hint="e-mail address" getValue={this.handleTextChange("email")} />
+        <MDBInputGroup className="mb-2"  hint="Affiliation" getValue={this.handleTextChange("affiliation")} />
 
+        <h5 className="text-uppercase  my-3 orange-text" >Service Information</h5>
+        <hr className="hr-bold my-3" />
         <h6> Description of the service </h6>
         <div className="mb-3 input-group">
             <div className="input-group-prepend">
@@ -202,7 +208,6 @@ class App extends React.Component {
               {({getRootProps, getInputProps}) => (
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
-
                   <p></p><p> {this.state.codefile ? this.state.codefile : "Your Python Code File"} </p>
                 </div>
               )}
@@ -212,12 +217,15 @@ class App extends React.Component {
        
         <h6> Command Line to Run Code </h6>
           <MDBInputGroup className="mb-3" hint="Ex. myfunction(input1)" />
+        <MDBRow> <h5 className=" my-2" >{" "}</h5></MDBRow>
 
+        <h6> List of dependencies </h6>
+          <MDBInputGroup className="mb-3" hint="pandas" />
         <MDBRow> <h5 className=" my-2" >{" "}</h5></MDBRow>
 
         {/* SERVICE INPUTS */}
         <div>
-          <h5 className="text-uppercase  my-2 orange-text" >Define Inputs and Outputs</h5>
+          <h5 className="text-uppercase  my-2 orange-text" >Define Service Inputs and Outputs</h5>
           <hr className="hr-bold my-1" />
           <div number="Inputs">
             <h6 className="text-uppercase my-3">Inputs</h6>
@@ -305,34 +313,51 @@ class IO extends React.Component {
     
     return (
       <MDBContainer>
+
+        <MDBRow className="my-1">
+          <MDBCol className="md-1" md="1" middle> {this.props.IO} {this.props.number}:
+          </MDBCol>
+          <MDBCol>
+            <MDBInputGroup className="md-1" prepend="name" hint="varname" />
+          </MDBCol>
+          <MDBCol>
+            <MDBInputGroup className="md-1" prepend="type" hint= "integer" />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow className="my-1">
+          <MDBCol className="md-1" md="1" middle> {} </MDBCol>
+          <MDBCol>
+            <MDBInputGroup className="md-1" prepend="label" hint="field name in service" />
+          </MDBCol>
+          {this.props.IO==="input" && (
+            <MDBCol>
+              <MDBInputGroup className="md-1" prepend="default value" hint= "suggested input value" />
+            </MDBCol>
+          )}
+        </MDBRow >
+        <MDBRow className="my-1">
+          <MDBCol className="md-1" md="1" middle> {} </MDBCol>
+          <MDBCol>
+            <MDBInputGroup className="md-1" prepend="description" hint="appears as tooltip" />
+          </MDBCol>
+        </MDBRow >
         <MDBBadge color="danger" className="ml-2 float-right"
           onClick={() => this.props.onDelete(this.props.name)}>
           - 
         </MDBBadge>
-        <MDBRow>
-          <MDBCol className="md-2" md="2" middle> {this.props.IO} {this.props.number} :
-          </MDBCol>
-          <MDBCol>
-            <MDBInputGroup className="md-2" prepend="name" hint="varname" />
-          </MDBCol>
-          <MDBCol>
-            <MDBInputGroup className="md-2" prepend="type" hint= "integer" />
-          </MDBCol>
-        </MDBRow>
-        <p></p>
-        <MDBRow>
-          <MDBCol className="mb-1" md="2"> {} </MDBCol>
-          <MDBCol className="mb-1" md="9">
-          <MDBCard>
-            <div style={{backgroundColor: '#eceff1'}} className="text-center orange-text">
-            <Dropzone onDrop={this.handlechange}>
-              {({getRootProps, getInputProps}) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  {this.state.filename} 
-                </div>
-              )}
-            </Dropzone>
+        <MDBRow className="my-1">
+          <MDBCol className="mb-1" md="3"> {} </MDBCol>
+          <MDBCol className="mb-1" md="8" middle>
+          <MDBCard className="header pt-0" >
+            <div className="text-center orange-text my-2">
+              <Dropzone onDrop={this.handlechange}>
+                {({getRootProps, getInputProps}) => (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {this.state.filename} 
+                  </div>
+                )}
+              </Dropzone>
             </div>
             </MDBCard>
           </MDBCol>
