@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/OSPARCServiceForm/static/css/main.cdb1922f.chunk.css",
+    "main.js": "/OSPARCServiceForm/static/js/main.da931601.chunk.js",
+    "main.js.map": "/OSPARCServiceForm/static/js/main.da931601.chunk.js.map",
+    "runtime~main.js": "/OSPARCServiceForm/static/js/runtime~main.9f5470fc.js",
+    "runtime~main.js.map": "/OSPARCServiceForm/static/js/runtime~main.9f5470fc.js.map",
+    "static/css/2.a4e17ce3.chunk.css": "/OSPARCServiceForm/static/css/2.a4e17ce3.chunk.css",
+    "static/js/2.524265da.chunk.js": "/OSPARCServiceForm/static/js/2.524265da.chunk.js",
+    "static/js/2.524265da.chunk.js.map": "/OSPARCServiceForm/static/js/2.524265da.chunk.js.map",
+    "index.html": "/OSPARCServiceForm/index.html",
+    "precache-manifest.ea4ed64f4daa981d915115a565607b79.js": "/OSPARCServiceForm/precache-manifest.ea4ed64f4daa981d915115a565607b79.js",
+    "service-worker.js": "/OSPARCServiceForm/service-worker.js",
+    "static/css/2.a4e17ce3.chunk.css.map": "/OSPARCServiceForm/static/css/2.a4e17ce3.chunk.css.map",
+    "static/css/main.cdb1922f.chunk.css.map": "/OSPARCServiceForm/static/css/main.cdb1922f.chunk.css.map",
+    "static/media/mdb.css": "/OSPARCServiceForm/static/media/arrow_right.8ef6a08c.svg",
+    "static/media/all.min.css": "/OSPARCServiceForm/static/media/fa-solid-900.d6d8d5da.woff2",
+    "static/media/osparclogo.JPG": "/OSPARCServiceForm/static/media/osparclogo.68906674.JPG"
+  }
+}
