@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "428a127b7548827f8e75115f2720b655",
+    "revision": "b00b337f623f3ae000ef7ef01770d814",
     "url": "/inputform/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/inputform/static/css/2.6f36b8d3.chunk.css"
   },
   {
-    "revision": "3a7563b734f2f838b720",
-    "url": "/inputform/static/css/main.cdb1922f.chunk.css"
+    "revision": "8d9470563720b17eea6e",
+    "url": "/inputform/static/css/main.d8a5cb57.chunk.css"
   },
   {
     "revision": "6fefc3b089d5a3d0f87d",
     "url": "/inputform/static/js/2.524265da.chunk.js"
   },
   {
-    "revision": "3a7563b734f2f838b720",
-    "url": "/inputform/static/js/main.cb07b69b.chunk.js"
+    "revision": "8d9470563720b17eea6e",
+    "url": "/inputform/static/js/main.0f67e17e.chunk.js"
   },
   {
     "revision": "20654a787dc01bc82dec",
