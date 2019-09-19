@@ -147,13 +147,13 @@ class App extends React.Component {
 
       <MDBModal centered isOpen={this.state.modal} toggle={this.toggleModal}>
         <MDBModalHeader
-          className="text-center"
+          className="text-center bg"
           titleClass="w-100 font-weight-bold"
           toggle={this.toggleModal}
         >
           Automated Checking and Submission 
         </MDBModalHeader>
-        <MDBModalBody>
+        <MDBModalBody className="bg">
           <p>Thank you {this.state.firstname + " "}for your submission. We are performing automatic 
           validation and will contact you when your service is integrated into O2S2PARC or 
           if we have any questions. </p>
@@ -163,7 +163,7 @@ class App extends React.Component {
             </MDBBtn>
           </MDBCol>
         </MDBModalBody>
-        <MDBModalFooter className="justify-content-center">
+        <MDBModalFooter className="justify-content-center bg">
         </MDBModalFooter>
       </MDBModal>
       
@@ -177,7 +177,7 @@ class App extends React.Component {
 
         {/* USER INFORMATION */}
         <h5 className="text-uppercase  my-3 orange-text" >Contributor Information</h5>
-        <hr className="hr-bold my-3" />
+        <hr className="linestyle" />
         <MDBRow>
           <MDBCol>
             <MDBInputGroup className="mb-2" hint="First Name" getValue={this.handleTextChange("firstname")}/>
@@ -190,7 +190,7 @@ class App extends React.Component {
         <MDBInputGroup className="mb-2"  hint="Affiliation" getValue={this.handleTextChange("affiliation")} />
 
         <h5 className="text-uppercase  my-3 orange-text" >Service Information</h5>
-        <hr className="hr-bold my-3" />
+        <hr className="linestyle" />
         <h6> Description of the service </h6>
         <div className="mb-3 input-group">
             <div className="input-group-prepend">
@@ -202,7 +202,7 @@ class App extends React.Component {
         </div>
       
         <h6> Code Upload </h6>
-        <div className="text-center mb-3 grey-text">
+        <div class="text-center mb-3 grey-text bg">
           <MDBCard>
             <Dropzone onDrop={this.onDrop}>
               {({getRootProps, getInputProps}) => (
@@ -226,7 +226,7 @@ class App extends React.Component {
         {/* SERVICE INPUTS */}
         <div>
           <h5 className="text-uppercase  my-2 orange-text" >Define Service Inputs and Outputs</h5>
-          <hr className="hr-bold my-1" />
+          <hr className="linestyle"  />
           <div number="Inputs">
             <h6 className="text-uppercase my-3">Inputs</h6>
             {this.state.inputs.map(input => (
@@ -241,7 +241,7 @@ class App extends React.Component {
             ))}
           </div>
           <MDBRow>
-            <hr className="hr-bold my-2" />
+            <hr className="linestyle"  />
             <MDBIcon icon="plus-square" size="lg" className="grey-text float-right"
             onClick={() => (this.addinput())}/>
           </MDBRow>
@@ -249,7 +249,7 @@ class App extends React.Component {
 
         {/* OUTPUTS */}
         <div>
-          <hr className="hr-bold my-1" />
+          <hr className="linestyle" />
           <div number="Outputs">
             <h6 className="text-uppercase my-3">Outputs</h6>
             {this.state.outputs.map(output => (
@@ -265,7 +265,7 @@ class App extends React.Component {
           </div>
 
           <MDBRow>
-            <hr className="hr-bold my-2" />
+            <hr className="linestyle" />
             <MDBIcon icon="plus-square" size="lg" className="grey-text float-right"
             onClick={() => (this.addoutput())}/>
           </MDBRow>
@@ -275,7 +275,7 @@ class App extends React.Component {
         {/* SUBMIT */}
         <MDBRow className="mb-5">
           <MDBCol xl="3" md="6" className="mx-auto text-center">
-            <MDBBtn color="info" rounded onClick={this.toggleModal} >
+            <MDBBtn  color="orange" rounded onClick={this.toggleModal} >
               Submit
             </MDBBtn>
           </MDBCol>
@@ -312,36 +312,36 @@ class IO extends React.Component {
   render() {
     
     return (
-      <MDBContainer>
-
+      <MDBContainer class="bg">
+        <div class="bg">
         <MDBRow className="my-1">
-          <MDBCol className="md-1" md="1" middle> {this.props.IO} {this.props.number}:
+          <MDBCol className="md-2" md="2" middle> {this.props.IO} {this.props.number}:
           </MDBCol>
           <MDBCol>
-            <MDBInputGroup className="md-1" prepend="name" hint="varname" />
+            <MDBInputGroup className="md-2" prepend="name" hint="varname" />
           </MDBCol>
           <MDBCol>
-            <MDBInputGroup className="md-1" prepend="type" hint= "integer" />
+            <MDBInputGroup className="md-2" prepend="type" hint= "integer" />
           </MDBCol>
         </MDBRow>
         <MDBRow className="my-1">
-          <MDBCol className="md-1" md="1" middle> {} </MDBCol>
+          <MDBCol className="md-2" md="2" middle> {} </MDBCol>
           <MDBCol>
-            <MDBInputGroup className="md-1" prepend="label" hint="field name in service" />
+            <MDBInputGroup className="md-2" prepend="label" hint="field name in service" />
           </MDBCol>
           {this.props.IO==="input" && (
             <MDBCol>
-              <MDBInputGroup className="md-1" prepend="default value" hint= "suggested input value" />
+              <MDBInputGroup className="md-2" prepend="default value" hint= "suggested input value" />
             </MDBCol>
           )}
         </MDBRow >
         <MDBRow className="my-1">
-          <MDBCol className="md-1" md="1" middle> {} </MDBCol>
+          <MDBCol className="md-2" md="2" middle> {} </MDBCol>
           <MDBCol>
-            <MDBInputGroup className="md-1" prepend="description" hint="appears as tooltip" />
+            <MDBInputGroup className="md-2" prepend="description" hint="appears as tooltip" />
           </MDBCol>
         </MDBRow >
-        <MDBBadge color="danger" className="ml-2 float-right"
+        <MDBBadge color="orange" className="ml-2 float-right"
           onClick={() => this.props.onDelete(this.props.name)}>
           - 
         </MDBBadge>
@@ -362,9 +362,10 @@ class IO extends React.Component {
             </MDBCard>
           </MDBCol>
         </MDBRow>
-
         <MDBRow> <h5 className=" my-2" >{" "}</h5></MDBRow>
+        </div>
       </MDBContainer>
+      
     );
   }
 }

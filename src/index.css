@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: rgb(19, 38, 73);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -8,6 +9,51 @@ body {
 }
 
 code {
+  background-color: rgb(19, 38, 73);
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.bg { 
+  /* The image used */
+  background-color:rgb(42, 51, 56);
+  color: #bbbbbb;
+  font-weight: normal;
+}
+
+.linestyle {
+  background-color: orange;
+  color: #435257;
+  height: .25px
+}
+
+.card {
+  background-color: #435257 !important;
+  border-color: #435257 !important;
+  color: #bbbbbb;
+}
+
+.form-control {
+  background-color: #171d1f !important; 
+  border-color: #171d1f !important;
+  color: #bbbbbb  !important;
+}
+
+ input[type=text] {
+  background-color: #171d1f !important; 
+  border-color: #171d1f !important;
+  color: #7f9396
+}
+
+input[type=text]:focus {
+  background-color: rgb(42, 51, 56) !important;
+  color: white; 
+}
+
+
+span {
+  background-color: #435257  !important;
+  border-color: #435257 !important;
+  color:  #b9c1ca!important;
+  font-weight: 300 !important;
 }
