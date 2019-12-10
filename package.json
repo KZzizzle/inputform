@@ -13,7 +13,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
@@ -33,6 +32,7 @@
   },
   "homepage": "https://KZzizzle.github.io/inputform",
   "devDependencies": {
-    "gh-pages": "^2.1.1"
+    "gh-pages": "^2.1.1",
+    "serialize-javascript": ">=2.1.1"
   }
 }
