@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "dropzone": "^6.0.0-beta.2",
-    "mdbreact": "^4.19.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "mdbreact": "^5.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-dropzone": "^14.2.3",
-    "react-scripts": "3.1.1"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,7 +34,7 @@
   },
   "homepage": "https://KZzizzle.github.io/inputform",
   "devDependencies": {
-    "gh-pages": "^2.1.1",
-    "serialize-javascript": ">=2.1.1"
+    "gh-pages": "^6.1.1",
+    "serialize-javascript": ">=6.0.2"
   }
 }
