@@ -34,7 +34,7 @@
   },
   "homepage": "https://KZzizzle.github.io/inputform",
   "devDependencies": {
-    "gh-pages": "^2.1.1",
+    "gh-pages": "^5.0.0",
     "serialize-javascript": ">=2.1.1"
   }
 }
